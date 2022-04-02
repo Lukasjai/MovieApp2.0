@@ -1,4 +1,4 @@
-package com.example.movieapp20.mainActivity
+package com.example.movieapp20
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -23,6 +23,10 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
 
 import androidx.compose.material.icons.filled.*
+import androidx.navigation.Navigation
+import androidx.navigation.compose.rememberNavController
+import com.example.movieapp20.home.HomeScreen
+import com.example.movieapp20.navigation.MovieNavigation
 import com.example.movieapp20.ui.theme.Movie
 import com.example.movieapp20.ui.theme.MovieApp20Theme
 import com.example.movieapp20.ui.theme.getMovies
@@ -32,18 +36,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MovieApp20Theme {
-                val movies = getMovies()
-                Myapp(movies)
 
+            Myapp {
+                MovieNavigation()
 
             }
         }
+
     }
 }
 
 @Composable
-fun Myapp(movieList: List<Movie> = getMovies()){
+fun Myapp(content: @Composable () -> Unit){
     var showMenu by remember {
         mutableStateOf(false)
     }
@@ -69,63 +73,13 @@ fun Myapp(movieList: List<Movie> = getMovies()){
                     }
                 } )
         }){
-        LazyColumn {
-            items(items = movieList) { movie ->
-                MovieRow(movie = movie)
+        content()
 
             }
         }
-    }
-}
 
 
 
-@OptIn(ExperimentalAnimationApi::class)
-@Composable
-fun MovieRow (movie: Movie = getMovies()[0]){
-    var changeState by remember {
-        mutableStateOf(false)
-    }
-    Card(modifier = Modifier
-        .padding(4.dp)
-        .fillMaxWidth()
-        .height(130.dp),
-        shape = RoundedCornerShape(corner = CornerSize(16.dp)),
-        elevation = 6.dp
-    ) {
-        Row (verticalAlignment = Alignment.CenterVertically){
-            Surface(modifier = Modifier
-                .size(100.dp)
-                .padding(12.dp)) {
-                Icon(imageVector = Icons.Default.AccountBox, contentDescription = "movie pic")
-            }
-
-            LazyColumn{
-                item{
-                    Text(text= movie.title)
-                    Text(text = "Director: ${movie.director}")
-                    Text(text = "Year: ${movie.year}")
-                    AnimatedVisibility(visible = changeState ) {
-                        Column(modifier = Modifier.padding(8.dp)) {
-                            Text(text = "Plot: ${movie.plot}")
-                            Text(text = "Actors: ${movie.actors}")
-                            Text(text = "Genre: ${movie.genre}")
-                            Text(text = "Rating: ${movie.rating}")
-                        }
-                    }
-                    IconButton(onClick = {changeState =! changeState}) {
-                        if (changeState){
-                            Icon(imageVector = Icons.Default.KeyboardArrowUp, contentDescription = "Arrowup")
-                        }else{
-                            Icon(imageVector = Icons.Default.KeyboardArrowDown, contentDescription = "Arrowdown")
-                        }
-                    }
-                }
-            }
-        }
-
-    }
-}
 
 
 
@@ -133,7 +87,7 @@ fun MovieRow (movie: Movie = getMovies()[0]){
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    MovieApp20Theme {
-        val movies = getMovies()
-        Myapp(movies)   }
-}
+    MovieApp20Theme{
+            HomeScreen()
+        }
+    }
