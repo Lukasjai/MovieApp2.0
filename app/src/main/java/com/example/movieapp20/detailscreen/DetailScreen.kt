@@ -57,7 +57,7 @@ fun MainContent(movie: Movie) {
 
     Divider()
 
-    Text(text = "${movie.title}", style = MaterialTheme.typography.h5)
+   // Text(text = "${movie.title}", style = MaterialTheme.typography.h5)
 }
 
 
