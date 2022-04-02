@@ -22,35 +22,40 @@ import com.example.movieapp20.ui.theme.getMovies
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun MovieRow (movie: Movie = getMovies()[0],
-                onItemClick: (String) -> Unit = {}){
+fun MovieRow(
+    movie: Movie = getMovies()[0],
+    onItemClick: (String) -> Unit = {}
+) {
 
     var changeState by remember {
         mutableStateOf(false)
     }
-    Card(modifier = Modifier
-        .padding(4.dp)
-        .fillMaxWidth()
-        .height(130.dp)
-        .clickable {
-                   onItemClick(movie.id)
-        },
+    Card(
+        modifier = Modifier
+            .padding(4.dp)
+            .fillMaxWidth()
+            .height(130.dp)
+            .clickable {
+                onItemClick(movie.id)
+            },
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
         elevation = 6.dp
     ) {
-        Row (verticalAlignment = Alignment.CenterVertically){
-            Surface(modifier = Modifier
-                .size(100.dp)
-                .padding(12.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Surface(
+                modifier = Modifier
+                    .size(100.dp)
+                    .padding(12.dp)
+            ) {
                 Icon(imageVector = Icons.Default.AccountBox, contentDescription = "movie pic")
             }
 
-            LazyColumn{
-                item{
-                    Text(text= movie.title)
+            LazyColumn {
+                item {
+                    Text(text = movie.title)
                     Text(text = "Director: ${movie.director}")
                     Text(text = "Year: ${movie.year}")
-                    AnimatedVisibility(visible = changeState ) {
+                    AnimatedVisibility(visible = changeState) {
                         Column(modifier = Modifier.padding(8.dp)) {
                             Text(text = "Plot: ${movie.plot}")
                             Text(text = "Actors: ${movie.actors}")
@@ -58,11 +63,17 @@ fun MovieRow (movie: Movie = getMovies()[0],
                             Text(text = "Rating: ${movie.rating}")
                         }
                     }
-                    IconButton(onClick = {changeState =! changeState}) {
-                        if (changeState){
-                            Icon(imageVector = Icons.Default.KeyboardArrowUp, contentDescription = "Arrowup")
-                        }else{
-                            Icon(imageVector = Icons.Default.KeyboardArrowDown, contentDescription = "Arrowdown")
+                    IconButton(onClick = { changeState = !changeState }) {
+                        if (changeState) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowUp,
+                                contentDescription = "Arrowup"
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowDown,
+                                contentDescription = "Arrowdown"
+                            )
                         }
                     }
                 }

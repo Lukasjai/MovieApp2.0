@@ -36,51 +36,19 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             Myapp {
                 MovieNavigation()
-
             }
         }
-
     }
 }
 
 @Composable
-fun Myapp(content: @Composable () -> Unit){
-    var showMenu by remember {
-        mutableStateOf(false)
-    }
-    Scaffold (
-        topBar = {
-            TopAppBar(title = {Text(text = "Movie")},
-                actions = {
-                    IconButton(onClick = {showMenu =! showMenu}) {
-                        Icon(imageVector = Icons.Default.MoreVert, contentDescription = "moreVert")
-                    }
-                    DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                        DropdownMenuItem(onClick = { /*TODO*/ }) {
-                            Row {
-                                Icon(imageVector = Icons.Default.Favorite,
-                                    contentDescription = "Favorites" )
-                                Text(text = "Favorites", modifier = Modifier
-                                    .padding(4.dp)
-                                    .width(100.dp))
-
-                            }
-                        }
-
-                    }
-                } )
-        }){
+fun Myapp(content: @Composable () -> Unit) {
+    MovieApp20Theme {
         content()
-
-            }
-        }
-
-
-
-
+    }
+}
 
 
 

@@ -21,31 +21,34 @@ import com.example.movieapp20.ui.theme.getMovies
 
 @Preview
 @Composable
-fun DetailScreen(navController: NavHostController = rememberNavController()){
+fun DetailScreen(
+    navController: NavHostController = rememberNavController(),
+    movieId: String? = "tt0499549"
+) {
     MainContent {
-        Text(text = "My detail screen")
+        Text(text = "My detail screen $movieId")
     }
 }
 
 @Composable
-fun MainContent(content: @Composable () -> Unit){
+fun MainContent(content: @Composable () -> Unit) {
 
-    Scaffold (
+    Scaffold(
         topBar = {
             TopAppBar(backgroundColor = Color.Cyan, elevation = 3.dp) {
                 Row() {
                     Icon(imageVector = Icons.Default.ArrowBack,
                         contentDescription = "Arrow back",
                         modifier = Modifier.clickable {
-                        
-                    })
+
+                        })
                     Spacer(modifier = Modifier.width(20.dp))
-                    
+
                     Text(text = "Movie X")
                 }
             }
 
-        }){
+        }) {
         content()
 
     }
