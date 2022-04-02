@@ -24,7 +24,7 @@ fun DetailScreen(
     navController: NavHostController = rememberNavController(),
     movieId: String? = "tt0499549"
 ) {
-    val movie= filterMovie(movieId = movieId)
+    val movie = filterMovie(movieId = movieId)
     MainContent(movie.title, navController = navController) {
         MovieRow(movie = movie)
 
@@ -34,8 +34,8 @@ fun DetailScreen(
 
         Text(text = "${movie.title}", style = MaterialTheme.typography.h5)
 
-        }
     }
+}
 
 
 @Composable
