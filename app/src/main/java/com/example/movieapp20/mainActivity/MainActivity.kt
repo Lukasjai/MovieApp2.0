@@ -1,4 +1,4 @@
-package com.example.movieapp20
+package com.example.movieapp20.mainActivity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
