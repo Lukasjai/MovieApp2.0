@@ -25,40 +25,39 @@ fun DetailScreen(
     movieId: String? = "tt0499549"
 ) {
     val movie = filterMovie(movieId = movieId)
-    MainContent(movie.title, navController = navController) {
-        MovieRow(movie = movie)
 
-        Spacer(modifier = Modifier.height(8.dp))
+    Scaffold(
+        topBar = {
+            TopAppBar(backgroundColor = Color.Cyan, elevation = 3.dp) {
+                Row {
+                    Icon(imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Arrow back",
+                        modifier = Modifier.clickable {
+                            navController.popBackStack()  // go back to the last destination(screen)
+                        })
 
-        Divider()
+                    Spacer(modifier = Modifier.width(20.dp))
 
-        Text(text = "${movie.title}", style = MaterialTheme.typography.h5)
+                    Text(text = movie.title)
+                }
+            }
+
+        }) {
+        MainContent(movie = movie)
 
     }
 }
 
 
 @Composable
-fun MainContent(movieTitel: String,navController: NavHostController,  content: @Composable () -> Unit) {
-    Scaffold(
-        topBar = {
-            TopAppBar(backgroundColor = Color.Cyan, elevation = 3.dp) {
-                Row() {
-                    Icon(imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Arrow back",
-                        modifier = Modifier.clickable {
-                            navController.popBackStack()  // go back to the last destination(screen)
-                        })
-                    Spacer(modifier = Modifier.width(20.dp))
+fun MainContent(movie: Movie) {
+    MovieRow(movie = movie)
 
-                    Text(text = movieTitel)
-                }
-            }
+    Spacer(modifier = Modifier.height(8.dp))
 
-        }) {
-        content()
+    Divider()
 
-    }
+    Text(text = "${movie.title}", style = MaterialTheme.typography.h5)
 }
 
 

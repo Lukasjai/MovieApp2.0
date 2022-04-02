@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.movieapp20.navigation.MovieScreen
 import com.example.movieapp20.ui.theme.Movie
 import com.example.movieapp20.ui.theme.getMovies
 import com.example.movieapp20.widgets.MovieRow
@@ -63,7 +64,7 @@ fun MainContent(navController: NavController, movies: List<Movie> = getMovies())
             MovieRow(movie = movie)
             { movieId ->
                 navController.navigate("homeScreen")
-                navController.navigate("detailScreen/$movieId")
+                navController.navigate(MovieScreen.DetailScreen.name + "/$movieId")
             }
 
 

@@ -14,10 +14,10 @@ import com.example.movieapp20.home.HomeScreen
 @Composable
 fun MovieNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "homeScreen") {
-        composable("homeScreen") { HomeScreen(navController = navController) }
+    NavHost(navController = navController, startDestination = MovieScreen.HomeScreen.name) {
+        composable(MovieScreen.HomeScreen.name) { HomeScreen(navController = navController) }
         composable(
-            "detailscreen/{movie}",
+            MovieScreen.DetailScreen.name + "/{movie}",
             arguments = listOf(navArgument("movie") {
                 type = NavType.StringType
             })
