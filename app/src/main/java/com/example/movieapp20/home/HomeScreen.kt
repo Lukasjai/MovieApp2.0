@@ -19,7 +19,11 @@ fun HomeScreen(navController: NavController = rememberNavController()){
 fun MainContent (navController: NavController, movies: List<Movie> = getMovies()) {
     LazyColumn {
         items(movies) { movie ->
-            MovieRow(movie =movie )
+            MovieRow(movie = movie )
+            {
+                navController.navigate(route = "detailScreen")
+
+            }
 
 
 

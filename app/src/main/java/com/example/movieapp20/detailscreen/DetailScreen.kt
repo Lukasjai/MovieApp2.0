@@ -16,11 +16,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.movieapp20.ui.theme.getMovies
 
 @Preview
 @Composable
-fun DetailScreen(){
+fun DetailScreen(navController: NavHostController = rememberNavController()){
     MainContent {
         Text(text = "My detail screen")
     }

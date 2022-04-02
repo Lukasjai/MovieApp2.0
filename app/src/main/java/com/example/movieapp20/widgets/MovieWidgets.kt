@@ -2,6 +2,7 @@ package com.example.movieapp20.widgets
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CornerSize
@@ -21,14 +22,19 @@ import com.example.movieapp20.ui.theme.getMovies
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun MovieRow (movie: Movie = getMovies()[0]){
+fun MovieRow (movie: Movie = getMovies()[0],
+                onItemClick: (String) -> Unit = {}){
+
     var changeState by remember {
         mutableStateOf(false)
     }
     Card(modifier = Modifier
         .padding(4.dp)
         .fillMaxWidth()
-        .height(130.dp),
+        .height(130.dp)
+        .clickable {
+                   onItemClick(movie.id)
+        },
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
         elevation = 6.dp
     ) {
