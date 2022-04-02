@@ -1,10 +1,7 @@
 package com.example.movieapp20.detailscreen
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -17,7 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.movieapp20.ui.theme.Movie
 import com.example.movieapp20.ui.theme.getMovies
+import com.example.movieapp20.widgets.MovieRow
 
 @Preview
 @Composable
@@ -25,14 +24,22 @@ fun DetailScreen(
     navController: NavHostController = rememberNavController(),
     movieId: String? = "tt0499549"
 ) {
-    MainContent {
-        Text(text = "My detail screen $movieId")
+    val movie= filterMovie(movieId = movieId)
+    MainContent(movie.title, navController = navController) {
+        MovieRow(movie = movie)
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Divider()
+
+        Text(text = "${movie.title}", style = MaterialTheme.typography.h5)
+
+        }
     }
-}
+
 
 @Composable
-fun MainContent(content: @Composable () -> Unit) {
-
+fun MainContent(movieTitel: String,navController: NavHostController,  content: @Composable () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(backgroundColor = Color.Cyan, elevation = 3.dp) {
@@ -40,11 +47,11 @@ fun MainContent(content: @Composable () -> Unit) {
                     Icon(imageVector = Icons.Default.ArrowBack,
                         contentDescription = "Arrow back",
                         modifier = Modifier.clickable {
-
+                            navController.popBackStack()  // go back to the last destination(screen)
                         })
                     Spacer(modifier = Modifier.width(20.dp))
 
-                    Text(text = "Movie X")
+                    Text(text = movieTitel)
                 }
             }
 
@@ -55,19 +62,6 @@ fun MainContent(content: @Composable () -> Unit) {
 }
 
 
-/*
-
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-//import com.example.movieapp.home.MainContent
-import com.example.movieapp.ui.theme.getMovies
-
-
-@Composable
-fun DetailScreen(movieId: String? = getMovies()[0].id){
-    Text(text = "My detail screen")
+fun filterMovie(movieId: String?): Movie {
+    return getMovies().filter { movie ->  movie.id == movieId }[0]
 }
-
- */
