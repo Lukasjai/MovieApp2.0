@@ -1,6 +1,7 @@
 package com.example.movieapp20.home
 
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -43,6 +44,11 @@ fun HomeScreen(navController: NavController = rememberNavController()) {
                                     text = "Favorites", modifier = Modifier
                                         .padding(4.dp)
                                         .width(100.dp)
+                                        .clickable {
+                                            navController.navigate(MovieScreen.FavouriteScreen.name)
+                                        }
+
+
                                 )
 
                             }

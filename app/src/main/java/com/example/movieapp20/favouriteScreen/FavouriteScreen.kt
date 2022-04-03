@@ -1,7 +1,9 @@
-package com.example.movieapp20.detailscreen
+package com.example.movieapp20.favouriteScreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -10,26 +12,29 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.movieapp20.detailscreen.filterMovie
+import com.example.movieapp20.navigation.MovieScreen
 import com.example.movieapp20.ui.theme.Movie
 import com.example.movieapp20.ui.theme.getMovies
 import com.example.movieapp20.widgets.HorizontalScrollableImageView
 import com.example.movieapp20.widgets.MovieRow
 
-@Preview
 @Composable
-fun DetailScreen(
-    navController: NavHostController = rememberNavController(),
-    movieId: String? = "tt0499549"
+fun FavouriteScreen(
+    navController: NavController = rememberNavController(),
+    movieId: String? = "tt0993846",
 ) {
     val movie = filterMovie(movieId = movieId)
 
+    var showMenu by remember {
+        mutableStateOf(false)
+    }
     Scaffold(
         topBar = {
-            TopAppBar(backgroundColor = Color.Cyan, elevation = 3.dp) {
+            TopAppBar(backgroundColor = Color.DarkGray, elevation = 10.dp) {
                 Row {
                     Icon(imageVector = Icons.Default.ArrowBack,
                         contentDescription = "Arrow back",
@@ -39,12 +44,15 @@ fun DetailScreen(
 
                     Spacer(modifier = Modifier.width(20.dp))
 
-                    Text(text = movie.title)
+                    Text(text = "Favourite Movies")
                 }
             }
 
         }) {
-        MainContent(movie = movie)
+        Column() {
+            MainContent(movie = movie)
+        }
+
 
     }
 }
@@ -52,9 +60,11 @@ fun DetailScreen(
 
 @Composable
 fun MainContent(movie: Movie) {
-    Surface(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight()) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
         Column {
             MovieRow(movie = movie)
 
@@ -62,13 +72,7 @@ fun MainContent(movie: Movie) {
 
             Divider()
 
-            HorizontalScrollableImageView(movie = movie)
         }
     }
-   // Text(text = "${movie.title}", style = MaterialTheme.typography.h5)
 }
-
-
-fun filterMovie(movieId: String?): Movie {
-    return getMovies().filter { movie ->  movie.id == movieId }[0]
-}
+// Text(text = "${movie.title}", style = Material

@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.movieapp20.detailscreen.DetailScreen
+import com.example.movieapp20.favouriteScreen.FavouriteScreen
 import com.example.movieapp20.home.HomeScreen
 
 
@@ -26,6 +27,8 @@ fun MovieNavigation() {
                 navController = navController,
                 movieId = backstackEntry.arguments?.getString("movie")
             )
+        }
+        composable(MovieScreen.FavouriteScreen.name,) { FavouriteScreen(navController = navController)
         }
     }
 }
