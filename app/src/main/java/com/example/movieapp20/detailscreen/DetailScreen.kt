@@ -16,6 +16,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.movieapp20.ui.theme.Movie
 import com.example.movieapp20.ui.theme.getMovies
+import com.example.movieapp20.widgets.HorizontalScrollableImageView
 import com.example.movieapp20.widgets.MovieRow
 
 @Preview
@@ -51,11 +52,21 @@ fun DetailScreen(
 
 @Composable
 fun MainContent(movie: Movie) {
-    MovieRow(movie = movie)
+    Surface(modifier = Modifier
+        .fillMaxWidth()
+        .fillMaxHeight()) {
+        Column {
+            MovieRow(movie = movie)
 
-    Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-    Divider()
+            Divider()
+
+            HorizontalScrollableImageView(movie = movie)
+        }
+    }
+
+
 
    // Text(text = "${movie.title}", style = MaterialTheme.typography.h5)
 }
