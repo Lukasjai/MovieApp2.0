@@ -9,7 +9,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.movieapp20.ui.theme.Movie
@@ -26,7 +25,6 @@ fun DetailScreen(
     favouriteViewModel: FavouriteViewModel
 ) {
     val movie = filterMovie(movieId = movieId)
-
     Scaffold(
         topBar = {
             TopAppBar(backgroundColor = Color.Cyan, elevation = 3.dp) {
@@ -36,43 +34,47 @@ fun DetailScreen(
                         modifier = Modifier.clickable {
                             navController.popBackStack()  // go back to the last destination(screen)
                         })
-
                     Spacer(modifier = Modifier.width(20.dp))
-
                     Text(text = movie.title)
                 }
             }
-
         }) {
         MainContent(
             movie = movie,
-            favouritelambda = { movie -> favouriteViewModel.movieIsFavourite(movie)}){
-                movie -> if (favouriteViewModel.movieIsFavourite(movie)){
-            favouriteViewModel.removeMovie(movie)
-        }else{
-            favouriteViewModel.addMovie(movie = movie)
-        }
+            favouriteLambda = { movie -> favouriteViewModel.movieIsFavourite(movie) }) { movie ->
+            if (favouriteViewModel.movieIsFavourite(movie)) {
+                favouriteViewModel.removeMovie(movie)
+            } else {
+                favouriteViewModel.addMovie(movie = movie)
+            }
         }
     }
 }
 
 
 @Composable
-fun MainContent(movie: Movie,favouritelambda: (Movie) -> Boolean, onFavouriteClick: (Movie) -> Unit = {}) {
-    Surface(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight()) {
+fun MainContent(
+    movie: Movie,
+    favouriteLambda: (Movie) -> Boolean,
+    onFavouriteClick: (Movie) -> Unit = {}
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
         Column {
-            MovieRow(movie = movie, isFavourite = favouritelambda(movie), onFavouriteClick = onFavouriteClick, showFavouriteIcon = true )
-
+            MovieRow(
+                movie = movie,
+                isItFavourite = favouriteLambda(movie),
+                onFavClick = onFavouriteClick,
+                showFavIcon = true
+            )
             Spacer(modifier = Modifier.height(8.dp))
-
             Divider()
-
             HorizontalScrollableImageView(movie = movie)
         }
     }
-   // Text(text = "${movie.title}", style = MaterialTheme.typography.h5)
 }
 
 

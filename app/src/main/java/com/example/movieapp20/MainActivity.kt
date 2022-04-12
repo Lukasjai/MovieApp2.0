@@ -39,11 +39,10 @@ fun Myapp(content: @Composable () -> Unit) {
 }
 
 
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     Myapp {
         MovieNavigation()
     }
-    }
+}

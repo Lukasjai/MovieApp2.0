@@ -55,7 +55,7 @@ fun HomeScreen(navController: NavController = rememberNavController(), favourite
                     }
                 })
         }) {
-        MainContent(navController = navController, isFavoriteLambda = {movie -> favouriteViewModel.movieIsFavourite(movie)}){
+        MainContent(navController = navController, isFavLambda = { movie -> favouriteViewModel.movieIsFavourite(movie)}){
             movie -> if (favouriteViewModel.movieIsFavourite(movie)){
                 favouriteViewModel.removeMovie(movie)
         }else{
@@ -71,21 +71,20 @@ fun HomeScreen(navController: NavController = rememberNavController(), favourite
 fun MainContent(
     navController: NavController,
     movieList: List<Movie> = getMovies(),
-    isFavoriteLambda: (Movie) -> Boolean,
-    onFavoriteClick: (Movie) -> Unit = {}
+    isFavLambda: (Movie) -> Boolean,
+    onFavClick: (Movie) -> Unit = {}
 ) {
     LazyColumn {
         items(movieList) { movie ->
             MovieRow(
                 movie = movie,
-                isFavourite = isFavoriteLambda(movie),
-                onFavouriteClick = onFavoriteClick,
-                showFavouriteIcon = true,
+                isItFavourite = isFavLambda(movie),
+                onFavClick = onFavClick,
+                showFavIcon = true,
                 onItemClick = { movieId ->
                     navController.navigate("homeScreen")
                     navController.navigate(MovieScreen.DetailScreen.name + "/$movieId")
                 })
-            //  ActualMovies(movie = movie)
         }
     }
 }

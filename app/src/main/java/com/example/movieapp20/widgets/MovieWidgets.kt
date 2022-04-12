@@ -33,9 +33,9 @@ import com.example.movieapp20.ui.theme.getMovies
 fun MovieRow(
     movie: Movie = getMovies()[0],
     onItemClick: (String) -> Unit = {},
-    isFavourite: Boolean,
-    showFavouriteIcon: Boolean,
-    onFavouriteClick: (Movie) -> Unit,
+    isItFavourite: Boolean,
+    showFavIcon: Boolean,
+    onFavClick: (Movie) -> Unit,
 ) {
 
     var changeState by remember {
@@ -66,7 +66,6 @@ fun MovieRow(
                     contentScale = ContentScale.Crop
                 )
             }
-
             LazyColumn {
                 item {
                     Text(text = movie.title)
@@ -93,27 +92,22 @@ fun MovieRow(
                             )
                         }
                     }
-
                 }
-
             }
-            if (showFavouriteIcon) {
+            if (showFavIcon) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(10.dp),
                     horizontalAlignment = Alignment.End,
                 ) {
-
-                    favouriteButton(movie = movie, favouriteboolean = isFavourite) { movie ->
-                        onFavouriteClick(movie)
+                    favouriteButton(movie = movie, favBoolean = isItFavourite) { movie ->
+                        onFavClick(movie)
                     }
                 }
-
-            }else{
+            } else {
+            }
         }
-    }
-
     }
 }
 
@@ -121,13 +115,13 @@ fun MovieRow(
 @Composable
 fun favouriteButton(
     movie: Movie,
-    favouriteboolean: Boolean,
-    onFavouriteClick: (Movie) -> Unit = {}
+    favBoolean: Boolean,
+    onFavClick: (Movie) -> Unit = {}
 ) {
     IconButton(onClick = {
-        onFavouriteClick(movie)
+        onFavClick(movie)
     }) {
-        if (!favouriteboolean) {
+        if (!favBoolean) {
             Icon(
                 imageVector = Icons.Default.FavoriteBorder,
                 contentDescription = "FavouriteBorder",
@@ -139,38 +133,26 @@ fun favouriteButton(
                 contentDescription = "FavouriteBorder",
                 tint = Color.Green
             )
-
         }
     }
-
-
 }
 
 
-
-
-
-
 @Composable
-fun HorizontalScrollableImageView(movie: Movie = getMovies()[0]){
-    LazyRow{
-        items(movie.images){ images ->
+fun HorizontalScrollableImageView(movie: Movie = getMovies()[0]) {
+    LazyRow {
+        items(movie.images) { images ->
 
-        Card(modifier = Modifier
-            .padding(12.dp)
-            .size(240.dp), elevation = 4.dp) {
-                AsyncImage(model = images,
-                    contentDescription = "movie image",)
+            Card(
+                modifier = Modifier
+                    .padding(12.dp)
+                    .size(240.dp), elevation = 4.dp
+            ) {
+                AsyncImage(
+                    model = images,
+                    contentDescription = "movie image",
+                )
             }
         }
-
-        /*
-        AsyncImage(model = movie.images[0],
-            contentDescription = "movie_pictures",
-            modifier = Modifier.clip(CircleShape),
-            contentScale = ContentScale.Crop
-        )
-
-         */
-        }
     }
+}

@@ -11,8 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.movieapp20.detailscreen.filterMovie
@@ -24,15 +22,8 @@ import com.example.movieapp20.viewModel.FavouriteViewModel
 @Composable
 fun FavouriteScreen(
     navController: NavHostController = rememberNavController(),
-    movieId: String? = "tt0993846",
     favouriteViewModel: FavouriteViewModel
-)
-{
-    val movie = filterMovie(movieId = movieId)
-
-    var showMenu by remember {
-        mutableStateOf(false)
-    }
+) {
     Scaffold(
         topBar = {
             TopAppBar(backgroundColor = Color.DarkGray, elevation = 10.dp) {
@@ -42,21 +33,15 @@ fun FavouriteScreen(
                         modifier = Modifier.clickable {
                             navController.popBackStack()  // go back to the last destination(screen)
                         })
-
                     Spacer(modifier = Modifier.width(20.dp))
-
                     Text(text = "Favourite Movies")
                 }
             }
-
         }) {
         val favourites = favouriteViewModel.favouriteMovie
         Column {
-
             MainContent(favorites = favourites, navController = navController)
         }
-
-
     }
 }
 
@@ -69,15 +54,14 @@ fun MainContent(favorites: List<Movie>, navController: NavHostController) {
             .fillMaxHeight()
     ) {
         LazyColumn {
-            items(favorites){ movie ->
-                MovieRow(movie = movie, showFavouriteIcon = false, isFavourite = false){
+            items(favorites) { movie ->
+                MovieRow(movie = movie, showFavIcon = false, isItFavourite = false, onItemClick = {
                     navController.navigate(route = MovieScreen.DetailScreen.name + "/${movie.id}")
-            }
+                }) {
+                }
                 Spacer(modifier = Modifier.height(8.dp))
-
                 Divider()
             }
         }
     }
 }
-// Text(text = "${movie.title}", style = Material
