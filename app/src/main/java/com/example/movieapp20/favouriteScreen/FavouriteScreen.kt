@@ -7,26 +7,27 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.movieapp20.detailscreen.filterMovie
 import com.example.movieapp20.navigation.MovieScreen
 import com.example.movieapp20.ui.theme.Movie
-import com.example.movieapp20.ui.theme.getMovies
-import com.example.movieapp20.widgets.HorizontalScrollableImageView
 import com.example.movieapp20.widgets.MovieRow
+import com.example.movieapp20.viewModel.FavouriteViewModel
 
 @Composable
 fun FavouriteScreen(
-    navController: NavController = rememberNavController(),
+    navController: NavHostController = rememberNavController(),
     movieId: String? = "tt0993846",
-) {
+    favouriteViewModel: FavouriteViewModel
+)
+{
     val movie = filterMovie(movieId = movieId)
 
     var showMenu by remember {
@@ -49,8 +50,10 @@ fun FavouriteScreen(
             }
 
         }) {
-        Column() {
-            MainContent(movie = movie)
+        val favourites = favouriteViewModel.favouriteMovie
+        Column {
+
+            MainContent(favorites = favourites, navController = navController)
         }
 
 
@@ -59,19 +62,21 @@ fun FavouriteScreen(
 
 
 @Composable
-fun MainContent(movie: Movie) {
+fun MainContent(favorites: List<Movie>, navController: NavHostController) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
     ) {
-        Column {
-            MovieRow(movie = movie)
+        LazyColumn {
+            items(favorites){ movie ->
+                MovieRow(movie = movie, isFavourite = false){
+                    navController.navigate(route = MovieScreen.DetailScreen.name + "/${movie.id}")
+            }
+                Spacer(modifier = Modifier.height(8.dp))
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Divider()
-
+                Divider()
+            }
         }
     }
 }
