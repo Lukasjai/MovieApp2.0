@@ -70,7 +70,7 @@ fun MainContent(favorites: List<Movie>, navController: NavHostController) {
     ) {
         LazyColumn {
             items(favorites){ movie ->
-                MovieRow(movie = movie, isFavourite = false){
+                MovieRow(movie = movie, showFavouriteIcon = false, isFavourite = false){
                     navController.navigate(route = MovieScreen.DetailScreen.name + "/${movie.id}")
             }
                 Spacer(modifier = Modifier.height(8.dp))

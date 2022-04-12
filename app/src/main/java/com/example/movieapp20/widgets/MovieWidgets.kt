@@ -34,7 +34,8 @@ fun MovieRow(
     movie: Movie = getMovies()[0],
     onItemClick: (String) -> Unit = {},
     isFavourite: Boolean,
-    onFavouriteClick: (Movie) -> Unit
+    showFavouriteIcon: Boolean,
+    onFavouriteClick: (Movie) -> Unit,
 ) {
 
     var changeState by remember {
@@ -96,21 +97,22 @@ fun MovieRow(
                 }
 
             }
+            if (showFavouriteIcon) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp),
+                    horizontalAlignment = Alignment.End,
+                ) {
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                horizontalAlignment = Alignment.End,
-            ) {
-
-                favouriteButton(movie = movie, favouriteboolean = isFavourite){
-                    movie -> onFavouriteClick(movie)
+                    favouriteButton(movie = movie, favouriteboolean = isFavourite) { movie ->
+                        onFavouriteClick(movie)
+                    }
                 }
-            }
 
+            }else{
         }
-
+    }
 
     }
 }

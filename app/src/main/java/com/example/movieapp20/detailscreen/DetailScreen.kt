@@ -63,7 +63,7 @@ fun MainContent(movie: Movie,favouritelambda: (Movie) -> Boolean, onFavouriteCli
         .fillMaxWidth()
         .fillMaxHeight()) {
         Column {
-            MovieRow(movie = movie, isFavourite = favouritelambda(movie), onFavouriteClick = onFavouriteClick)
+            MovieRow(movie = movie, isFavourite = favouritelambda(movie), onFavouriteClick = onFavouriteClick, showFavouriteIcon = true )
 
             Spacer(modifier = Modifier.height(8.dp))
 

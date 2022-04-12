@@ -80,6 +80,7 @@ fun MainContent(
                 movie = movie,
                 isFavourite = isFavoriteLambda(movie),
                 onFavouriteClick = onFavoriteClick,
+                showFavouriteIcon = true,
                 onItemClick = { movieId ->
                     navController.navigate("homeScreen")
                     navController.navigate(MovieScreen.DetailScreen.name + "/$movieId")
